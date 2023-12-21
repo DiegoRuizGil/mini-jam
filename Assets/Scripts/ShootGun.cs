@@ -13,7 +13,7 @@ public class ShootGun : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (!_animals.Contains(other.gameObject))
+        if (!_animals.Contains(other.gameObject) && !other.CompareTag("Player"))
         {
             _animals.Add(other.gameObject);
             Debug.Log($"collider: {other.name}");
@@ -22,7 +22,7 @@ public class ShootGun : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (_animals.Contains(other.gameObject))
+        if (_animals.Contains(other.gameObject) && !other.CompareTag("Player"))
         {
             _animals.Remove(other.gameObject);
         }
