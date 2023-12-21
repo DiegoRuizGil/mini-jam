@@ -8,12 +8,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform _shootPoint;
     [SerializeField] private SpriteRenderer _spriteRenderer;
 
-    [Header("Shoot Positions")]
-    [SerializeField] private Sprite _shootRight;
-    [SerializeField] private Sprite _shootLeft;
-    [SerializeField] private Sprite _shootUp;
-    [SerializeField] private Sprite _shootDown;
-
     [Header("Settings")]
     [SerializeField] private float _movementSpeed;
     [SerializeField] private float _reloadingTime = 1f;
@@ -31,10 +25,13 @@ public class PlayerController : MonoBehaviour
     
     private bool _isReloading;
 
+    private Animator _animator;
+
     private void Awake()
     {
         _camera = Camera.main;
         _currentHealth = _maxHealth;
+        _animator = GetComponent<Animator>();
     }
     
     private void Update()
@@ -59,7 +56,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void UpdateHealth(int amount)
+    public void UpdateHealth(int amount)
     {
         _currentHealth = Mathf.Clamp(_currentHealth + amount, 0, _maxHealth);
 
@@ -84,19 +81,19 @@ public class PlayerController : MonoBehaviour
 
         if (angle < 45 && angle > 315)
         {
-            _spriteRenderer.sprite = _shootRight;
+            _animator.SetTrigger("Right");
         }
         else if (angle > 45 && angle < 135)
         {
-            _spriteRenderer.sprite = _shootUp;
+            _animator.SetTrigger("Up");
         }
         else if (angle > 135 && angle < 225)
         {
-            _spriteRenderer.sprite = _shootLeft;
+            _animator.SetTrigger("Left");
         }
         else if (angle > 225 && angle < 315)
         {
-            _spriteRenderer.sprite = _shootDown;
+            _animator.SetTrigger("Down");
         }
     }
 
